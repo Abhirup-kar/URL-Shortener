@@ -1,4 +1,14 @@
+node_modules
+.env
+.env.local
+.env.*.local
+dist
+dist-ssr
+*.local
+.vercel
 build_pdfs.py
 test_pdf.py
 url_shortener_architecture_and_algorithm.pdf
 url_shortener_How_it_works.pdf
+*.log
+.DS_Store

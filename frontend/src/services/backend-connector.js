@@ -6,8 +6,9 @@
  * 1. Replace the base URL `API_BASE_URL` with your server address (e.g., http://localhost:5000/api).
  * 2. Swap the localStorage mock code with real `fetch()` or `axios` calls as illustrated below.
  */
-
-const API_BASE_URL = 'http://localhost:3000'; // <-- Replace with your real Backend URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL !== undefined 
+  ? import.meta.env.VITE_API_BASE_URL 
+  : (import.meta.env.DEV ? 'http://localhost:3000' : '');
 
 /**
  * Helper to retrieve Auth Token (if utilizing JWT authorization)
