@@ -39,11 +39,13 @@ async function connectToDatabase() {
         return cachedDb;
     }
     try {
-        cachedDb = await mongoose.connect(DB_PATH);
+        cachedDb = await mongoose.connect(DB_PATH, {
+            serverSelectionTimeoutMS: 5000,
+        });
         console.log("MongoDB connected");
         return cachedDb;
     } catch (err) {
-        console.error("Error while connecting to database", err);
+        console.error("Error while connecting to database:", err.message);
         throw err;
     }
 }
@@ -54,7 +56,10 @@ app.use(async (req, res, next) => {
         await connectToDatabase();
         next();
     } catch (err) {
-        res.status(500).json({ message: "Database connection error" });
+        res.status(500).json({ 
+            message: "Database connection error", 
+            error: err.message 
+        });
     }
 });
 
