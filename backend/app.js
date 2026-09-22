@@ -6,7 +6,18 @@ const cors = require('cors');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo').MongoStore;
-const DB_PATH = "mongodb+srv://Abhirup:root@cluster0.x32ee4l.mongodb.net/?appName=Cluster0";
+
+const DB_PATH = process.env.DB_PATH;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+
+if (!DB_PATH) {
+    throw new Error('Missing required environment variable: DB_PATH');
+}
+
+if (!SESSION_SECRET) {
+    throw new Error('Missing required environment variable: SESSION_SECRET');
+}
+
 app.use(express.json());
 app.use(cors());
 
@@ -18,7 +29,7 @@ const store = MongoStore.create({
 });
 
 app.use(session({
-    secret: 'secret',
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store,
