@@ -8,7 +8,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo').MongoStore;
 
-const DB_PATH = process.env.MONGODB_URI || "mongodb+srv://Abhirup:root@cluster0.x32ee4l.mongodb.net/?appName=Cluster0";
+const DB_PATH = process.env.MONGODB_URI || process.env.DB_PATH || "mongodb+srv://Abhirup:root@cluster0.x32ee4l.mongodb.net/?appName=Cluster0";
 const PORT = process.env.PORT || 3000;
 const SESSION_SECRET = process.env.SESSION_SECRET || 'secret';
 
@@ -78,4 +78,4 @@ if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
     });
 }
 
-module.exports = app;
+module.exports = app;

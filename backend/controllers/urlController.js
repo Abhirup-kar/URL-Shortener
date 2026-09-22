@@ -1,6 +1,7 @@
 const Url = require('../models/urls.js');
 const User = require('../models/users.js');
 const express = require('express');
+const bcrypt = require('bcryptjs');
 
 const urlControllers = express.Router();
 
@@ -29,10 +30,11 @@ urlControllers.post('/urls/shorten', async (req, res) => {
             // Find or create a default guest user to satisfy the schema requirement
             let guest = await User.findOne({ email: 'guest@shorten.it' });
             if (!guest) {
+                const guestPassword = await bcrypt.hash(Math.random().toString(36), 10);
                 guest = await User.create({
                     username: 'guest',
                     email: 'guest@shorten.it',
-                    password: 'guestpassword'
+                    password: guestPassword
                 });
             }
             userId = guest._id;
